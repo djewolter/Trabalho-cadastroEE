@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Listagem de Produtos</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+        <style>
+            body { background-color: #f8f9fa; } /* Fundo levemente cinza para destacar o cartão branco */
+        </style>
+    </h:head>
+    <h:body>
+        
+        <nav class="navbar navbar-dark bg-dark mb-4 shadow-sm">
+            <div class="container">
+                <span class="navbar-brand mb-0 h1"><i class="bi bi-box-seam"></i> Sistema CadastroEE</span>
+            </div>
+        </nav>
+
+        <div class="container">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0 text-secondary"><i class="bi bi-list-ul"></i> Produtos Cadastrados</h4>
+                    
+                    <h:form>
+                        <h:commandLink action="#{produtoController.prepararInclusao}" styleClass="btn btn-success">
+                            <i class="bi bi-plus-lg"></i> Novo Produto
+                        </h:commandLink>
+                    </h:form>
+                </div>
+                
+                <div class="card-body">
+                    <h:form>
+                        <h:dataTable value="#{produtoController.listaProdutos}" var="p" styleClass="table table-hover align-middle mb-0">
+                            <h:column>
+                                <f:facet name="header">ID</f:facet>
+                                <h:outputText value="#{p.idProduto}" styleClass="text-muted fw-bold"/>
+                            </h:column>
+                            
+                            <h:column>
+                                <f:facet name="header">Nome</f:facet>
+                                <h:outputText value="#{p.nome}" styleClass="fw-semibold"/>
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">Quantidade</f:facet>
+                                <span class="badge bg-secondary rounded-pill">
+                                    <h:outputText value="#{p.quantidade}"/>
+                                </span>
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">Preço de Venda</f:facet>
+                                <h:outputText value="#{p.precoVenda}" styleClass="text-success fw-bold">
+                                    <f:convertNumber type="currency" currencySymbol="R$ " />
+                                </h:outputText>
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">Ações</f:facet>
+                                <h:commandLink action="#{produtoController.prepararAlteracao(p)}" styleClass="btn btn-outline-primary btn-sm me-2" title="Editar">
+                                    <i class="bi bi-pencil-square"></i> Editar
+                                </h:commandLink>
+                                
+                                <h:commandLink action="#{produtoController.excluir(p)}" styleClass="btn btn-outline-danger btn-sm" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir este produto?');">
+                                    <i class="bi bi-trash3"></i>
+                                </h:commandLink>
+                            </h:column>
+                        </h:dataTable>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+        
+    </h:body>
+</html>
